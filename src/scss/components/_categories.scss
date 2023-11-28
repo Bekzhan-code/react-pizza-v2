@@ -1,0 +1,20 @@
+@import "../variables";
+
+.categories {
+  display: inline-block;
+  ul {
+    column-gap: 9px;
+    li {
+      padding: 14px 28px;
+      background-color: $category-bgc-white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+
+      &.active {
+        background-color: $category-bgc-black;
+        color: $white;
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@import "../variables";
+
+.pizza-block {
+  display: inline-block;
+  min-width: 280px;
+  text-align: center;
+
+  &__title {
+    margin: 11px 0 22px 0;
+  }
+
+  &__parameters {
+    background-color: $pizza-parameters-bgc;
+    border-radius: 10px;
+    padding: 7px 5px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 17px;
+  }
+
+  &__type,
+  &__size {
+    display: flex;
+    column-gap: 6px;
+
+    li {
+      padding: 10px 0;
+      cursor: pointer;
+
+      &.active {
+        background-color: $white;
+      }
+    }
+  }
+
+  &__type {
+    margin-bottom: 7px;
+    li {
+      width: 50%;
+
+      border-radius: 5px;
+    }
+  }
+
+  &__size {
+    li {
+      width: 33%;
+      border-radius: 5px;
+    }
+  }
+
+  &__price {
+    font-size: 22px;
+    font-weight: 700;
+  }
+}

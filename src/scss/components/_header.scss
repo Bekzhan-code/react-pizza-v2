@@ -1,0 +1,17 @@
+.header {
+  padding-top: 50px;
+
+  h2 {
+    color: $black;
+  }
+
+  &__logo {
+    margin-right: 17px;
+  }
+
+  &__horizontal-line {
+    content: "";
+    border: 1px $gray-line-color solid;
+    margin-top: 40px;
+  }
+}

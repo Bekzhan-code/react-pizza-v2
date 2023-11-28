@@ -1,0 +1,35 @@
+@import "../variables";
+
+.sort-popup {
+  position: relative;
+  font-size: 14px;
+
+  &__text {
+    margin: 0 8px 0 6px;
+  }
+
+  &__options {
+    display: none;
+    position: absolute;
+    left: 90px;
+    top: 27px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+    border-radius: 10px;
+    padding: 13px 0;
+
+    li {
+      padding: 10px 22px 10px 14px;
+      cursor: pointer;
+
+      &.active,
+      &:hover {
+        background-color: rgba(254, 95, 30, 0.05);
+      }
+
+      &.active {
+        font-weight: 700;
+        color: $orange;
+      }
+    }
+  }
+}
