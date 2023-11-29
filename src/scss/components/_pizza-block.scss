@@ -5,6 +5,11 @@
   min-width: 280px;
   text-align: center;
 
+  &__img {
+    width: 260px;
+    height: 260px;
+  }
+
   &__title {
     margin: 11px 0 22px 0;
   }
@@ -29,6 +34,11 @@
 
       &.active {
         background-color: $white;
+      }
+
+      &.disabled {
+        opacity: 0.4;
+        pointer-events: none;
       }
     }
   }

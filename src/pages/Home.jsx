@@ -4,6 +4,8 @@ import Categories from "../components/Categories";
 import SortPopup from "../components/SortPopup";
 import PizzaBlock from "../components/PizzaBlock";
 
+import pizzas from "../assets/pizzas.json";
+
 function Home() {
   return (
     <div>
@@ -15,14 +17,16 @@ function Home() {
       <div className="content">
         <h1>Все пиццы</h1>
         <div className="content__items">
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
+          {pizzas.map((obj) => (
+            <PizzaBlock
+              key={obj.id}
+              imageUrl={obj.imageUrl}
+              name={obj.name}
+              types={obj.types}
+              sizes={obj.sizes}
+              price={obj.price}
+            />
+          ))}
         </div>
       </div>
     </div>

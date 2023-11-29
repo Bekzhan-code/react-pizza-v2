@@ -1,27 +1,47 @@
 import React from "react";
 
-import pizzaImg from "../assets/img/pizzza-img.svg";
+function PizzaBlock({ imageUrl, name, types, sizes, price }) {
+  const [activeType, setActiveType] = React.useState(0);
+  const [activeSize, setActiveSize] = React.useState(0);
 
-function PizzaBlock() {
+  const typeNames = ["тонкое", "традиционное"];
+  const sizeNames = [26, 30, 40];
   return (
     <div className="pizza-block">
-      <img src={pizzaImg} alt="pizza" />
-      <h3 className="pizza-block__title">Чизбургер-пицца</h3>
+      <img className="pizza-block__img" src={imageUrl} alt="pizza" />
+      <h3 className="pizza-block__title">{name}</h3>
 
       <div className="pizza-block__parameters">
         <ul className="pizza-block__type ">
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {typeNames.map((type, index) => (
+            <li
+              className={`${activeType === index ? "active" : ""} ${
+                types.includes(type) ? "" : "disabled"
+              }`}
+              key={index}
+              onClick={() => setActiveType(index)}
+            >
+              {type}
+            </li>
+          ))}
         </ul>
         <ul className="pizza-block__size ">
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizeNames.map((size, index) => (
+            <li
+              className={`${activeSize === index ? "active" : ""} ${
+                sizes.includes(size) ? "" : "disabled"
+              }`}
+              key={index}
+              onClick={() => setActiveSize(index)}
+            >
+              {size} см.
+            </li>
+          ))}
         </ul>
       </div>
 
       <div className="flex--center">
-        <span className="pizza-block__price">от 395 ₽</span>
+        <span className="pizza-block__price">от {price} ₽</span>
         <button className="btn btn--outline">
           <svg
             width="12"

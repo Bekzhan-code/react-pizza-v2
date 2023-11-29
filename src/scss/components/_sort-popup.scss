@@ -8,8 +8,11 @@
     margin: 0 8px 0 6px;
   }
 
+  &__selected {
+    cursor: pointer;
+  }
+
   &__options {
-    display: none;
     position: absolute;
     left: 90px;
     top: 27px;

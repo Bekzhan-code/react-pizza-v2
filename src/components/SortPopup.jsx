@@ -1,6 +1,15 @@
 import React from "react";
 
 function SortPopup() {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [activeSortBy, setActiveSortBy] = React.useState(0);
+
+  const sortByNames = ["популярности", "цене", "алфавиту"];
+
+  const onClickSortBy = (index) => {
+    setActiveSortBy(index);
+    setIsVisible(false);
+  };
   return (
     <div className="sort-popup">
       <svg
@@ -17,13 +26,26 @@ function SortPopup() {
       </svg>
 
       <b className="sort-popup__text">Сортировка по:</b>
-      <span className="sort-popup__selected text--orange">популярности</span>
+      <span
+        className="sort-popup__selected text--orange"
+        onClick={() => setIsVisible(!isVisible)}
+      >
+        {sortByNames[activeSortBy]}
+      </span>
 
-      <ul className="sort-popup__options">
-        <li className="active">популярности</li>
-        <li>цене</li>
-        <li>алфавиту</li>
-      </ul>
+      {isVisible && (
+        <ul className="sort-popup__options">
+          {sortByNames.map((sortBy, index) => (
+            <li
+              className={index === activeSortBy ? "active" : ""}
+              key={index}
+              onClick={() => onClickSortBy(index)}
+            >
+              {sortBy}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
