@@ -1,7 +1,11 @@
 import React from "react";
 
+import { CategoryContext } from "../App";
+
 function Categories() {
-  const [activeCatIndex, setActiveCatIndex] = React.useState(0);
+  const { activeCatIndex, setActiveCatIndex } =
+    React.useContext(CategoryContext);
+
   const categoryNames = [
     "Все",
     "Мясные",

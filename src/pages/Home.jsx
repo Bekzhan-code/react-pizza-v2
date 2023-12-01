@@ -3,10 +3,9 @@ import React from "react";
 import Categories from "../components/Categories";
 import SortPopup from "../components/SortPopup";
 import PizzaBlock from "../components/PizzaBlock";
+import PizzaBlockSkeleton from "../components/PizzaBlock/Skeleton";
 
-import pizzas from "../assets/pizzas.json";
-
-function Home() {
+function Home({ pizzas, isLoadingPizzas }) {
   return (
     <div>
       <div className="filter-block flex--center">
@@ -17,16 +16,11 @@ function Home() {
       <div className="content">
         <h1>Все пиццы</h1>
         <div className="content__items">
-          {pizzas.map((obj) => (
-            <PizzaBlock
-              key={obj.id}
-              imageUrl={obj.imageUrl}
-              name={obj.name}
-              types={obj.types}
-              sizes={obj.sizes}
-              price={obj.price}
-            />
-          ))}
+          {isLoadingPizzas
+            ? [...Array(8)].map((_, index) => (
+                <PizzaBlockSkeleton key={index} />
+              ))
+            : pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
         </div>
       </div>
     </div>

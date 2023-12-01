@@ -36,6 +36,62 @@ body {
   }
 }
 
+.cart {
+  width: 65%;
+  margin: 0 auto;
+  padding: 100px 0;
+
+  &__top {
+    margin-bottom: 30px;
+    &-left {
+      svg {
+        margin-right: 17px;
+      }
+    }
+
+    &-right {
+      cursor: pointer;
+      svg {
+        margin-right: 7px;
+      }
+
+      span {
+        color: #b6b6b6;
+      }
+
+      &:hover {
+        span {
+          color: $gray;
+        }
+      }
+
+      &:active {
+        span {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    margin-top: 10px;
+
+    &-details {
+      font-size: 22px;
+      margin-bottom: 40px;
+      span {
+        font-weight: 700;
+      }
+    }
+
+    &-price {
+      span {
+        color: $orange;
+      }
+    }
+  }
+}
+
 // UTILITY CLASSES
 
 .flex {

@@ -10,7 +10,15 @@
   border-radius: 30px;
   cursor: pointer;
 
-  &--cart {
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    transform: translateY(3px);
+  }
+
+  &--header {
     padding: 15px 23px;
 
     &-delimiter {
@@ -32,6 +40,16 @@
       margin-right: 8px;
     }
 
+    i {
+      margin-left: 8px;
+      background-color: $btn-text-color;
+      width: 22px;
+      height: 22px;
+      color: $white;
+      padding: 2px 5px 2px 4px;
+      border-radius: 100%;
+    }
+
     &:hover {
       background-color: $orange;
       color: $white;
@@ -43,6 +61,26 @@
           fill: $white;
         }
       }
+
+      i {
+        color: $btn-text-color;
+        background-color: $white;
+      }
     }
+  }
+
+  &--outline-gray {
+    border: 1px solid #d3d3d3;
+    color: #cacaca;
+
+    &:hover {
+      background-color: $black;
+      color: $white;
+      border: 1px solid $black;
+    }
+  }
+
+  &--cart {
+    padding: 18px 30px;
   }
 }

@@ -1,22 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import pizzaLogo from "../assets/img/pizza-logo.svg";
 
 function Header() {
   return (
     <header className="header">
-      <a className="container flex" href="/">
-        <div className="flex--center">
+      <div className="container flex">
+        <Link className="flex--center" to="/">
           <img className="header__logo" src={pizzaLogo} alt="pizza logo" />
           <div>
             <h2 className="text--bolder">REACT PIZZA</h2>
             <p className="text--gray">самая вкусная пицца во вселенной</p>
           </div>
-        </div>
+        </Link>
 
-        <button className="btn btn--cart flex--center">
+        <Link className="btn btn--header flex--center" to="/cart">
           520 &#8381;
-          <div className="btn--cart-delimiter"></div>
+          <div className="btn--header-delimiter"></div>
           <svg
             width="18"
             height="18"
@@ -47,8 +48,8 @@ function Header() {
             />
           </svg>
           &nbsp; 3
-        </button>
-      </a>
+        </Link>
+      </div>
       <div className="header__horizontal-line"></div>
     </header>
   );

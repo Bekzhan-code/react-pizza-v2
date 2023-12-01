@@ -1,15 +1,13 @@
 import React from "react";
 
+import { SortByContext } from "../App";
+
 function SortPopup() {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [activeSortBy, setActiveSortBy] = React.useState(0);
+  const { activeSortBy, isVisible, onClickSortBy, setIsVisible } =
+    React.useContext(SortByContext);
 
   const sortByNames = ["популярности", "цене", "алфавиту"];
 
-  const onClickSortBy = (index) => {
-    setActiveSortBy(index);
-    setIsVisible(false);
-  };
   return (
     <div className="sort-popup">
       <svg
