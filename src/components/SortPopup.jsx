@@ -1,12 +1,20 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { SortByContext } from "../App";
+import { setActiveSortInd } from "../redux/slices/filterSlice";
+
+const sortNames = ["популярности", "цене", "алфавиту"];
 
 function SortPopup() {
-  const { activeSortBy, isVisible, onClickSortBy, setIsVisible } =
-    React.useContext(SortByContext);
+  const activeSortInd = useSelector((state) => state.filter.sort.activeSortInd);
+  const dispatch = useDispatch();
 
-  const sortByNames = ["популярности", "цене", "алфавиту"];
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  const onClickSort = (index) => {
+    dispatch(setActiveSortInd(index));
+    setIsVisible(false);
+  };
 
   return (
     <div className="sort-popup">
@@ -28,18 +36,18 @@ function SortPopup() {
         className="sort-popup__selected text--orange"
         onClick={() => setIsVisible(!isVisible)}
       >
-        {sortByNames[activeSortBy]}
+        {sortNames[activeSortInd]}
       </span>
 
       {isVisible && (
         <ul className="sort-popup__options">
-          {sortByNames.map((sortBy, index) => (
+          {sortNames.map((sortName, index) => (
             <li
-              className={index === activeSortBy ? "active" : ""}
+              className={index === activeSortInd ? "active" : ""}
               key={index}
-              onClick={() => onClickSortBy(index)}
+              onClick={() => onClickSort(index)}
             >
-              {sortBy}
+              {sortName}
             </li>
           ))}
         </ul>
