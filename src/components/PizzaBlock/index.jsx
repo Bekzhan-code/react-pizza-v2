@@ -1,11 +1,38 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-function PizzaBlock({ imageUrl, name, types, sizes, price }) {
-  const [activeType, setActiveType] = React.useState(0);
-  const [activeSize, setActiveSize] = React.useState(0);
+import { addItem } from "../../redux/slices/cartSlice";
 
-  const typeNames = ["тонкое", "традиционное"];
-  const sizeNames = [26, 30, 40];
+const typeNames = ["тонкое", "традиционное"];
+const sizeTypes = [26, 30, 40];
+
+function PizzaBlock({ id, imageUrl, name, types, sizes, price }) {
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state) =>
+    state.cart.items.find((obj) => obj.id === id)
+  );
+
+  const [activeType, setActiveType] = React.useState(
+    types.includes("тонкое") ? 0 : 1
+  );
+  const [activeSize, setActiveSize] = React.useState(
+    sizes.includes(26) ? 0 : 1
+  );
+
+  const pizzaObj = {
+    id,
+    imageUrl,
+    name,
+    price,
+    type: typeNames[activeType],
+    size: sizeTypes[activeSize],
+  };
+
+  const addedCount = cartItem ? cartItem.count : 0;
+
+  const onClickAdd = () => {
+    dispatch(addItem(pizzaObj));
+  };
   return (
     <div className="pizza-block">
       <img className="pizza-block__img" src={imageUrl} alt="pizza" />
@@ -26,7 +53,7 @@ function PizzaBlock({ imageUrl, name, types, sizes, price }) {
           ))}
         </ul>
         <ul className="pizza-block__size ">
-          {sizeNames.map((size, index) => (
+          {sizeTypes.map((size, index) => (
             <li
               className={`${activeSize === index ? "active" : ""} ${
                 sizes.includes(size) ? "" : "disabled"
@@ -42,7 +69,7 @@ function PizzaBlock({ imageUrl, name, types, sizes, price }) {
 
       <div className="flex--center">
         <span className="pizza-block__price">от {price} ₽</span>
-        <button className="btn btn--outline">
+        <button className="btn btn--outline" onClick={onClickAdd}>
           <svg
             width="12"
             height="12"
@@ -55,8 +82,7 @@ function PizzaBlock({ imageUrl, name, types, sizes, price }) {
               fill="#EB5A1E"
             />
           </svg>
-          Добавить
-          <i>2</i>
+          Добавить {addedCount === 0 ? "" : <i>{addedCount}</i>}
         </button>
       </div>
     </div>

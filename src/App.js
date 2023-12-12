@@ -7,38 +7,22 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import { setFilters } from "./redux/slices/filterSlice";
+import { fetchPizzas } from "./redux/slices/pizzaSlice";
 
 import "./scss/app.scss";
 
 function App() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const isSearch = React.useRef(false);
-  const isMounted = React.useRef(false);
-
   const activeCategoryInd = useSelector(
     (state) => state.filter.activeCategoryInd
   );
-
   const { sortBy } = useSelector((state) => state.filter.sort);
+  const { items, status } = useSelector((state) => state.pizza);
 
-  const [pizzas, setPizzas] = React.useState([]);
-  const [isLoadingPizzas, setIsLoadingPizzas] = React.useState(true);
+  const navigate = useNavigate();
 
-  function fetchPizzas() {
-    setIsLoadingPizzas(true);
-    fetch(
-      `https://656852f29927836bd9748b19.mockapi.io/items?category=${
-        activeCategoryInd > 0 ? activeCategoryInd : ""
-      }&sortBy=${sortBy}`
-    )
-      .then((res) => res.json())
-      .then((arr) => {
-        setPizzas(arr);
-        setIsLoadingPizzas(false);
-      });
-  }
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
 
   React.useEffect(() => {
     if (window.location.search) {
@@ -47,16 +31,12 @@ function App() {
       dispatch(setFilters(params));
 
       isSearch.current = true;
-
-      console.log(window.location.search);
-      console.log("set filters useEffect, no variables");
     }
   }, []);
 
   React.useEffect(() => {
     if (!isSearch.current) {
-      fetchPizzas();
-      console.log("fetching pizzas useEffect, category and sort indexes");
+      dispatch(fetchPizzas(activeCategoryInd, sortBy));
     }
     isSearch.current = false;
   }, [activeCategoryInd, sortBy]);
@@ -69,10 +49,6 @@ function App() {
       });
 
       navigate(`?${queryString}`);
-
-      console.log(
-        "changing url parameters useEffect, category and sort indexes"
-      );
     }
     isMounted.current = true;
   }, [activeCategoryInd, sortBy]);
@@ -85,7 +61,12 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home pizzas={pizzas} isLoadingPizzas={isLoadingPizzas} />}
+            element={
+              <Home
+                pizzas={items}
+                isLoadingPizzas={status === "loading" ? true : false}
+              />
+            }
           />
           <Route path="/cart" element={<Cart />} />
         </Routes>

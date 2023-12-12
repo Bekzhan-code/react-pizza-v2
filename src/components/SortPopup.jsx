@@ -11,13 +11,27 @@ function SortPopup() {
 
   const [isVisible, setIsVisible] = React.useState(false);
 
+  const sortRef = React.useRef();
+
   const onClickSort = (index) => {
     dispatch(setActiveSortInd(index));
     setIsVisible(false);
   };
 
+  React.useEffect(() => {
+    const onClickOutsideSort = (event) => {
+      if (!sortRef.current.contains(event.target)) setIsVisible(false);
+    };
+
+    document.body.addEventListener("click", onClickOutsideSort);
+
+    return () => {
+      document.body.removeEventListener("click", onClickOutsideSort);
+    };
+  }, []);
+
   return (
-    <div className="sort-popup">
+    <div className="sort-popup" ref={sortRef}>
       <svg
         width="10"
         height="6"

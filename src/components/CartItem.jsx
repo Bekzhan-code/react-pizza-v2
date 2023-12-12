@@ -1,81 +1,81 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
-function CartItem() {
+import { increment, decrement, removeItem } from "../redux/slices/cartSlice";
+
+function CartItem({ id, imageUrl, name, type, size, price, count }) {
+  const dispatch = useDispatch();
+
+  const onRemoveItem = () => {
+    if (window.confirm("Вы действительно хотите удалить пиццу?")) {
+      dispatch(removeItem(id));
+    }
+  };
+
+  const onIncrement = () => {
+    dispatch(increment(id));
+  };
+
+  const onDecrement = () => {
+    dispatch(decrement(id));
+  };
+
   return (
     <div className="cart-item flex">
       <div className="cart-item__info flex--center">
-        <img
-          src="https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg"
-          alt="cart pizza"
-        />
+        <img src={imageUrl} alt="cart pizza" />
         <div className="cart-item__descr">
-          <h3>Пепперони Фреш с перцем</h3>
-          <p>тонкое тесто, 26 см.</p>
+          <h3>{name}</h3>
+          <p>
+            {type} тесто, {size} см.
+          </p>
         </div>
       </div>
       <div className="cart-item__details flex--center">
         <div className="cart-item__amount flex--center">
           <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
+            className="btn--circle btn--circle-orange"
+            onClick={onDecrement}
+            width="10"
+            height="2"
+            viewBox="0 0 10 2"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <circle
-              cx="16"
-              cy="16"
-              r="15"
-              fill="white"
-              stroke="#FE5F1E"
-              stroke-width="2"
-            />
             <path
-              d="M15.0402 15.04H19.8402C20.3704 15.04 20.8002 15.4698 20.8002 16C20.8002 16.5302 20.3704 16.96 19.8402 16.96H15.0402H12.1602C11.63 16.96 11.2002 16.5302 11.2002 16C11.2002 15.4698 11.63 15.04 12.1602 15.04H15.0402Z"
+              d="M4.04019 0.0399933H8.84019C9.37035 0.0399933 9.80019 0.469833 9.80019 0.999993C9.80019 1.53015 9.37035 1.95999 8.84019 1.95999H4.04019H1.1602C0.630035 1.95999 0.200195 1.53015 0.200195 0.999993C0.200195 0.469833 0.630035 0.0399933 1.1602 0.0399933H4.04019Z"
               fill="#FE5F1E"
             />
           </svg>
-          <span>2</span>
+
+          <span>{count}</span>
           <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
+            className="btn--circle btn--circle-orange"
+            onClick={onIncrement}
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <circle
-              cx="16"
-              cy="16"
-              r="15"
-              fill="white"
-              stroke="#FE5F1E"
-              stroke-width="2"
-            />
             <path
-              d="M19.8402 15.04H16.9602V12.16C16.9602 11.6299 16.5304 11.2 16.0002 11.2C15.47 11.2 15.0402 11.6299 15.0402 12.16V15.04H12.1602C11.63 15.04 11.2002 15.4699 11.2002 16C11.2002 16.5302 11.63 16.96 12.1602 16.96H15.0402V19.84C15.0402 20.3702 15.47 20.8 16.0002 20.8C16.5304 20.8 16.9602 20.3702 16.9602 19.84V16.96H19.8402C20.3704 16.96 20.8002 16.5302 20.8002 16C20.8002 15.4699 20.3704 15.04 19.8402 15.04Z"
+              d="M8.84019 4.04001H5.96019V1.16001C5.96019 0.629852 5.53035 0.200012 5.00019 0.200012C4.47003 0.200012 4.04019 0.629852 4.04019 1.16001V4.04001H1.1602C0.630035 4.04001 0.200195 4.46985 0.200195 5.00001C0.200195 5.53017 0.630035 5.96001 1.1602 5.96001H4.04019V8.84001C4.04019 9.37017 4.47003 9.80001 5.00019 9.80001C5.53035 9.80001 5.96019 9.37017 5.96019 8.84001V5.96001H8.84019C9.37035 5.96001 9.80019 5.53017 9.80019 5.00001C9.80019 4.46985 9.37035 4.04001 8.84019 4.04001Z"
               fill="#EB5A1E"
             />
           </svg>
         </div>
-        <span className="cart-item__price">770 ₽ </span>
+        <span className="cart-item__price">{price} ₽ </span>
         <svg
-          className="cart-item__clear"
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
+          className="cart-item__clear btn--circle btn--circle-gray"
+          onClick={onRemoveItem}
+          width="10"
+          height="9"
+          viewBox="0 0 10 9"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle
-            cx="16"
-            cy="16"
-            r="15"
-            fill="white"
-            stroke="#D7D7D7"
-            stroke-width="2"
-          />
           <path
-            d="M19.7479 17.9557L17.4993 15.7071L19.7479 13.4585C20.1618 13.0446 20.1618 12.3734 19.7479 11.9595C19.334 11.5455 18.6628 11.5455 18.2488 11.9595L16.0002 14.2081L13.7516 11.9595C13.3377 11.5455 12.6665 11.5455 12.2526 11.9595C11.8386 12.3734 11.8386 13.0446 12.2526 13.4585L14.5012 15.7071L12.2526 17.9557C11.8386 18.3696 11.8386 19.0409 12.2526 19.4548C12.6665 19.8687 13.3377 19.8687 13.7516 19.4548L16.0002 17.2062L18.2488 19.4548C18.6628 19.8687 19.334 19.8687 19.7479 19.4548C20.1618 19.0409 20.1618 18.3696 19.7479 17.9557Z"
+            d="M8.74791 6.95572L6.49931 4.70712L8.74791 2.45852C9.16184 2.04459 9.16184 1.37338 8.74791 0.959454C8.33398 0.545525 7.66277 0.545525 7.24884 0.959454L5.00024 3.20805L2.75164 0.959454C2.33771 0.545525 1.66651 0.545525 1.25258 0.959454C0.838648 1.37338 0.838648 2.04459 1.25258 2.45852L3.50118 4.70712L1.25258 6.95572C0.838649 7.36965 0.838649 8.04086 1.25258 8.45479C1.66651 8.86872 2.33772 8.86872 2.75164 8.45479L5.00024 6.20619L7.24884 8.45479C7.66277 8.86872 8.33398 8.86872 8.74791 8.45479C9.16184 8.04086 9.16184 7.36965 8.74791 6.95572Z"
             fill="#D0D0D0"
           />
         </svg>

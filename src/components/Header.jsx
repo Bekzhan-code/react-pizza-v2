@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import pizzaLogo from "../assets/img/pizza-logo.svg";
 
 function Header() {
+  const { totalPrice, totalAmount } = useSelector((state) => state.cart);
+
   return (
     <header className="header">
       <div className="container flex">
@@ -16,7 +19,7 @@ function Header() {
         </Link>
 
         <Link className="btn btn--header flex--center" to="/cart">
-          520 &#8381;
+          {totalPrice} &#8381;
           <div className="btn--header-delimiter"></div>
           <svg
             width="18"
@@ -47,7 +50,7 @@ function Header() {
               strokeLinejoin="round"
             />
           </svg>
-          &nbsp; 3
+          &nbsp; {totalAmount}
         </Link>
       </div>
       <div className="header__horizontal-line"></div>

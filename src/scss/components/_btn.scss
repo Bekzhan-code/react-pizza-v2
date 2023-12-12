@@ -83,4 +83,38 @@
   &--cart {
     padding: 18px 30px;
   }
+
+  &--circle {
+    width: 32px;
+    height: 32px;
+    padding: 7px;
+    border-radius: 50%;
+
+    &:hover {
+      transition: all $duration ease-in-out;
+      path {
+        fill: $white;
+      }
+    }
+    &:active {
+      transform: translateY(3px);
+    }
+
+    &-orange {
+      border: 3px solid $orange;
+
+      &:hover {
+        background-color: $orange;
+      }
+    }
+
+    &-gray {
+      border: 3px solid #d0d0d0;
+
+      &:hover {
+        background-color: $black;
+        border-color: $black;
+      }
+    }
+  }
 }
