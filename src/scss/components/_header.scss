@@ -9,6 +9,14 @@
     margin-right: 17px;
   }
 
+  &__auth-btns {
+    margin-left: 10px;
+
+    button:first-child {
+      margin-right: 5px;
+    }
+  }
+
   &__horizontal-line {
     content: "";
     border: 1px $gray-line-color solid;

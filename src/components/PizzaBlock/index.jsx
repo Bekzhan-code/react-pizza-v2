@@ -1,16 +1,24 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addItem } from "../../redux/slices/cartSlice";
+import axios from "../../axios";
+import { fetchCart } from "../../redux/slices/cartSlice";
+import { selectIsAuth } from "../../redux/slices/authSlice";
 
 const typeNames = ["тонкое", "традиционное"];
 const sizeTypes = [26, 30, 40];
 
-function PizzaBlock({ id, imageUrl, name, types, sizes, price }) {
+function PizzaBlock({ imageUrl, name, types, sizes, price }) {
   const dispatch = useDispatch();
-  const cartItem = useSelector((state) =>
-    state.cart.items.find((obj) => obj.id === id)
+
+  const addedCount = useSelector((state) =>
+    state.cart.items
+      .filter((obj) => obj.name === name)
+      .reduce((sum, obj) => {
+        return sum + obj.amount;
+      }, 0)
   );
+  const isAuth = useSelector(selectIsAuth);
 
   const [activeType, setActiveType] = React.useState(
     types.includes("тонкое") ? 0 : 1
@@ -19,19 +27,20 @@ function PizzaBlock({ id, imageUrl, name, types, sizes, price }) {
     sizes.includes(26) ? 0 : 1
   );
 
-  const pizzaObj = {
-    id,
-    imageUrl,
-    name,
-    price,
-    type: typeNames[activeType],
-    size: sizeTypes[activeSize],
-  };
-
-  const addedCount = cartItem ? cartItem.count : 0;
-
-  const onClickAdd = () => {
-    dispatch(addItem(pizzaObj));
+  const onClickAdd = async () => {
+    if (isAuth) {
+      const pizzaObj = {
+        imageUrl,
+        name,
+        price,
+        type: typeNames[activeType],
+        size: sizeTypes[activeSize],
+      };
+      await axios.post("/cartPizzas", pizzaObj);
+      dispatch(fetchCart());
+    } else {
+      alert("Вы не авторизованы!");
+    }
   };
   return (
     <div className="pizza-block">

@@ -3,15 +3,17 @@ import CartItem from "../components/CartItem";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { clearItems } from "../redux/slices/cartSlice";
+import axios from "../axios";
+import { fetchCart } from "../redux/slices/cartSlice";
 
 function Cart() {
   const dispatch = useDispatch();
   const { items, totalPrice, totalAmount } = useSelector((state) => state.cart);
 
-  const onClearItems = () => {
+  const onClearItems = async () => {
     if (window.confirm("Вы действительно хотите очистить корзину?")) {
-      dispatch(clearItems());
+      await axios.delete(`/cartPizzas?userId=${items[0].user._id}`);
+      dispatch(fetchCart());
     }
   };
   return (
@@ -91,7 +93,7 @@ function Cart() {
       </div>
       <div className="cart__items">
         {items.map((obj) => (
-          <CartItem key={obj.id} {...obj} />
+          <CartItem key={obj._id} {...obj} />
         ))}
       </div>
       <div className="cart__bottom">

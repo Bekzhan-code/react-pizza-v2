@@ -1,23 +1,36 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { increment, decrement, removeItem } from "../redux/slices/cartSlice";
+import axios from "../axios";
+import { fetchCart } from "../redux/slices/cartSlice";
 
-function CartItem({ id, imageUrl, name, type, size, price, count }) {
+function CartItem({ _id, imageUrl, name, type, size, price, amount }) {
   const dispatch = useDispatch();
 
-  const onRemoveItem = () => {
+  const pizzaObj = {
+    imageUrl,
+    name,
+    price,
+    type,
+    size,
+  };
+
+  const onRemoveItem = async () => {
     if (window.confirm("Вы действительно хотите удалить пиццу?")) {
-      dispatch(removeItem(id));
+      await axios.delete(`/cartPizzas/${_id}`);
+      dispatch(fetchCart());
     }
   };
 
-  const onIncrement = () => {
-    dispatch(increment(id));
+  const onIncrement = async () => {
+    await axios.post("/cartPizzas", pizzaObj);
+    dispatch(fetchCart());
   };
 
-  const onDecrement = () => {
-    dispatch(decrement(id));
+  const onDecrement = async () => {
+    await axios.patch(`/cartPizzas/${_id}`, pizzaObj);
+
+    dispatch(fetchCart());
   };
 
   return (
@@ -48,7 +61,7 @@ function CartItem({ id, imageUrl, name, type, size, price, count }) {
             />
           </svg>
 
-          <span>{count}</span>
+          <span>{amount}</span>
           <svg
             className="btn--circle btn--circle-orange"
             onClick={onIncrement}
