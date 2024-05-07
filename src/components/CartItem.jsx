@@ -1,8 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import axios from "../axios";
-import { fetchCart } from "../redux/slices/cartSlice";
+import {
+  decrementAmount,
+  postItem,
+  deleteItem,
+} from "../redux/slices/cartSlice";
 
 function CartItem({ _id, imageUrl, name, type, size, price, amount }) {
   const dispatch = useDispatch();
@@ -15,22 +18,18 @@ function CartItem({ _id, imageUrl, name, type, size, price, amount }) {
     size,
   };
 
-  const onRemoveItem = async () => {
+  const onRemoveItem = () => {
     if (window.confirm("Вы действительно хотите удалить пиццу?")) {
-      await axios.delete(`/cartPizzas/${_id}`);
-      dispatch(fetchCart());
+      dispatch(deleteItem(_id));
     }
   };
 
-  const onIncrement = async () => {
-    await axios.post("/cartPizzas", pizzaObj);
-    dispatch(fetchCart());
+  const onIncrement = () => {
+    dispatch(postItem(pizzaObj));
   };
 
-  const onDecrement = async () => {
-    await axios.patch(`/cartPizzas/${_id}`, pizzaObj);
-
-    dispatch(fetchCart());
+  const onDecrement = () => {
+    dispatch(decrementAmount({ pizzaObj, _id }));
   };
 
   return (

@@ -3,8 +3,7 @@ import CartItem from "../components/CartItem";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import axios from "../axios";
-import { fetchCart } from "../redux/slices/cartSlice";
+import { deleteAllItems } from "../redux/slices/cartSlice";
 
 function Cart() {
   const dispatch = useDispatch();
@@ -12,8 +11,7 @@ function Cart() {
 
   const onClearItems = async () => {
     if (window.confirm("Вы действительно хотите очистить корзину?")) {
-      await axios.delete(`/cartPizzas?userId=${items[0].user._id}`);
-      dispatch(fetchCart());
+      dispatch(deleteAllItems(items[0].user._id));
     }
   };
   return (

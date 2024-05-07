@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "../../axios";
-import { fetchCart } from "../../redux/slices/cartSlice";
+import { postItem, fetchCart } from "../../redux/slices/cartSlice";
 import { selectIsAuth } from "../../redux/slices/authSlice";
 
 const typeNames = ["тонкое", "традиционное"];
@@ -36,8 +36,7 @@ function PizzaBlock({ imageUrl, name, types, sizes, price }) {
         type: typeNames[activeType],
         size: sizeTypes[activeSize],
       };
-      await axios.post("/cartPizzas", pizzaObj);
-      dispatch(fetchCart());
+      dispatch(postItem(pizzaObj));
     } else {
       alert("Вы не авторизованы!");
     }
